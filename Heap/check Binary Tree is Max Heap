@@ -8,6 +8,7 @@ Approach :
    case 2. if left child exist and right is null at leaf node level.
 4. if (CBT and max heap ==true) return true;
 return false;
+this is for undersatndings
 */
 class Solution {
     int traverse(Node root,int count)
@@ -47,7 +48,6 @@ class Solution {
     boolean isHeap(Node tree) {
         // code here
         int count=traverse(tree,0);
-        
         if(isCBT(tree,count,1) ==true && isMaxheap(tree)==true) return true;
         return false;
     }
