@@ -1,0 +1,63 @@
+//VVIP
+//Approach :
+/*
+time complexity : O(V+E) V: vertex E : Edges
+ * first prepare adjcency list
+ * if any element traversal find true it means it got previousal and that element is parent of current node otherwise it is loop.
+ * if visited[node]==false and parent[node]!=adj.get[node][j] then loop exist
+ * else visited[node]=false
+ */
+class Solution {
+    public boolean isBFSCyclic( ArrayList<ArrayList<Integer>> adj,boolean[] visited,int i,int v)
+    {
+        Queue<Integer> q=new LinkedList<>();
+        q.add(i);
+        visited[i]=true;
+        int parent[]=new int[v];
+        Arrays.fill(parent,-1);
+
+        while(!q.isEmpty())
+        {
+            int front=q.remove();
+            ArrayList<Integer> list=adj.get(front);
+            for(int j=0;j<list.size();j++)
+            {
+                int val=list.get(j);
+                if(visited[val]==true && parent[front]!=val )
+                {
+                    return true;
+                }
+                else if(!visited[val])
+                {
+                    q.add(val);
+                    visited[val]=true;
+                    parent[val]=front;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+        return false;
+    }
+    // Function to detect cycle in an undirected graph.
+    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+        // Code here
+        boolean[] visited=new boolean[V];
+        Arrays.fill(visited,false);
+        for(int i=0;i<V;i++)
+        {
+            if(!visited[i])
+            {
+                boolean ans=isBFSCyclic(adj,visited,i,V);
+                if(ans) 
+                {
+                    return ans;
+                }
+            }
+        }
+         
+        return false;
+    }
+}

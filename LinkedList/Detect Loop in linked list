@@ -1,0 +1,19 @@
+//Detect Loop in linked list
+//slow =head and fast=head.next;
+//if  loop exist then  slow ==fast at any point of loop otherwise out program end successfully and return false;
+class Solution {
+    //Function to check if the linked list has a loop.
+    public static boolean detectLoop(Node head){
+        // Add code here
+        if(head==null) return false;
+        Node slow=head;
+        Node fast=head.next;
+        while(slow!=null && fast!=null && fast.next!=null)
+        {
+            if(slow==fast) return true;
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return false;
+    }
+}

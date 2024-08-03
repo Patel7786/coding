@@ -1,0 +1,55 @@
+//Approach 
+/*
+ * first prepare adjcency list.
+ * in directed graph visited[node]=true and parent[node]!=val this is not working beacuse of directed graph.
+ * prepare to boolean array first for node :-visited[] 
+ * second is for dfs call record : dfsvisited[]
+ * if(visited[node]==true and dfsvisited[node] ==true) it means beafore dfs call occure in hirerchy so loop exist.
+ */
+class Solution {
+    // Function to detect cycle in a directed graph.
+    public boolean isDFSCyclic(int node,ArrayList<ArrayList<Integer>> adj,boolean[] visited,boolean[] dfsvisited)
+    {
+        //mark node is visited
+        visited[node]=true;
+        dfsvisited[val]=true;
+        ArrayList<Integer> list=adj.get(node);
+        for(int i=0;i<list.size();i++)
+        {
+            int val=list.get(i);
+            if(!visited[val])
+            {
+                if(isDFSCyclic(val,adj,visited,dfsvisited)) return true;
+
+            }
+            else if(dfsvisited[val]) 
+            {
+                return true;
+            }
+        }
+        //if DfSCycle is false it means we come from the dfs call and no loop exist then unmark dfsvisited[val]
+        dfsvisited[val]=false;
+        return false;
+        
+    }
+    
+    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+        // code here
+        boolean[] visited=new boolean[V];
+        boolean[] dfsvisited=new boolean[V];
+        Arrays.fill(visited,false);
+        Arrays.fill(dfsvisited,false);
+        for(int i=0;i<V;i++)
+        {
+            //if node are not visited then call 
+            if(!visited[i])
+            {
+                
+                //if loop found then return ans.
+                if(isDFSCyclic(i,adj,visited,dfsvisited)) return true;
+                
+            }
+        }
+        return false;
+    }
+}

@@ -1,0 +1,35 @@
+/*
+Approach:
+1.traverse bst into inorder and store data in list
+2.after that override every node by indexing in list in post order manner.
+*/
+class Solution
+{
+    static int index=0;
+    static void fastConvert(Node root,ArrayList<Integer>list)
+    {
+        if(root==null) return;
+        fastConvert(root.left,list);
+        fastConvert(root.right,list);
+        root.data=list.get(index++);
+        
+    }
+    static void traverse(Node root,ArrayList<Integer> list)
+    {
+        if(root==null) return ;
+        traverse(root.left,list);
+        list.add(root.data);
+        traverse(root.right,list);
+    }
+    public static void convertToMaxHeapUtil(Node root)
+    {
+        //code here
+        if(root==null) return ;
+        Solution.index=0;
+        ArrayList<Integer> list=new ArrayList<>();
+        traverse(root,list);
+        fastConvert(root,list);
+        
+       
+    }
+}

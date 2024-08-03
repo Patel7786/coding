@@ -1,0 +1,96 @@
+//Most important part of this question is the repetition is not allowed like (3,5) or (5,3) are same and cout 1 to become 8;
+//due to that we are using exclude include approach
+
+
+//memoizations time and space O(N*sum) where N:is arr lenght and sum=n;
+
+class Geeks {
+    public long maxcount(int n,long dp[][],int arr[],int index)
+    {
+        if(n==0) return 1;
+        if(n<0) return 0;
+        if(index==3) return 0;
+        if(dp[index][n]!=-1) return dp[index][n];
+        dp[index][n] =maxcount(n-arr[index],dp,arr,index)+maxcount(n,dp,arr,index+1);
+        return dp[index][n];
+        
+    }
+    public long count(int n) {
+        long[][] dp = new long[3][n+1];
+        for(long[] row:dp)
+            Arrays.fill(row, -1);
+        int arr[]={3,5,10};
+       
+        
+        return maxcount(n,dp,arr,0);
+        
+    }
+}
+//Tabular //time and space isO(N*sum)
+class Geeks {
+    public long maxcount(int n,int arr[],int index)
+    {
+        long[][] dp = new long[4][n+1];
+        dp[0][0]=1;
+        for(int i=1;i<=3;i++)
+        {
+            long val=0;
+            int j;
+            for(j=0;j<=n;j++)
+            {
+                if(j-arr[i-1]>=0)
+                {
+                    dp[i][j]+=dp[i][j-arr[i-1]];
+                }
+                if(i>=1)
+                    dp[i][j]+=dp[i-1][j];
+            }
+        }
+        return dp[3][n];
+    }
+    public long count(int n) {
+       
+        int arr[]={3,5,10};
+       
+        
+        return maxcount(n,arr,0);
+        
+        // Add your code here.
+    }
+}
+
+//optimise approach time ans space O(N)
+class Geeks {
+    public long maxcount(int n,int arr[],int index)
+    {
+        long[] dp = new long[n+1];
+        dp[0]=1;
+        for(int i=3;i<=n;i++)
+        {
+            dp[i]+=dp[i-3];
+        }
+        for(int i=5;i<=n;i++)
+        {
+            dp[i]+=dp[i-5];
+        }
+        for(int i=10;i<=n;i++)
+        {
+            dp[i]+=dp[i-10];
+        }
+        return dp[n];
+        
+
+
+    }
+    public long count(int n) {
+       
+        int arr[]={3,5,10};
+       
+        
+        return maxcount(n,arr,0);
+        
+        // Add your code here.
+        
+        
+    }
+}

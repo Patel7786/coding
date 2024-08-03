@@ -1,0 +1,58 @@
+//Shortes path in undirected graph
+/*VVIP
+ * calculate parent for every vertex then backtrack from end to source that is minimum .
+ * backtracking Approach
+ */
+public static LinkedList<Integer> shortestPath(int[][] edges, int n, int m, int s, int t)
+	{
+		// Write your code here.
+		ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+		for(int i=0;i<n;i++)
+		{
+			adj.add(new ArrayList<Integer>());
+		}
+		for(int i=0;i<edges.length;i++)
+		{
+			int u=edges[i][0]-1;
+			int v=edges[i][1]-1;
+			adj.get(u).add(v);
+			adj.get(v).add(u);
+			
+		}
+		boolean[] visited=new boolean[n];
+		Arrays.fill(visited,false);
+		int[] parent=new int[n];
+		
+		Queue<Integer>q=new LinkedList<>();
+		q.add(s-1);
+		parent[s-1]=-1;
+		visited[s-1]=true;
+		while(!q.isEmpty())
+		{
+			int front=q.remove();
+			ArrayList<Integer> list=adj.get(front);
+			for(int i=0;i<list.size();i++)
+			{
+				int val=list.get(i);
+				if(!(visited[val]))
+				{
+					visited[val]=true;
+					parent[val]=front;
+					q.add(val);
+				}
+			}
+		}
+		
+		LinkedList<Integer> ans=new LinkedList<>();
+		int curr=t-1;
+		ans.add(curr+1);
+		while(curr !=s-1 && curr!=-1)
+		{
+			curr=parent[curr];
+			ans.add(curr+1);
+		}
+			Collections.reverse(ans);
+		
+		
+		return ans;
+	}

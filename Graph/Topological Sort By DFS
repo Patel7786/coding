@@ -1,0 +1,47 @@
+//Problem : it is applicable only DAG (Directed Acyclic graph). for every u->v then u is always before v in topological sort.
+/*Time complexity : O(V+E) 
+space complexity : o(V)
+ * travese like DfS but use stack and add elemnt if any element dfs call end.
+ */
+ 
+ class Solution
+ {
+     static void DFSTopological(int node,ArrayList<ArrayList<Integer>> adj,boolean[] visited,Stack<Integer>stack)
+     {
+         visited[node]=true;
+         ArrayList<Integer> list=adj.get(node);
+         for(int i=0;i<list.size();i++)
+         {
+             int val=list.get(i);
+             if(!visited[val])
+             {
+                 DFSTopological(val,adj,visited,stack);
+             }
+         }
+         //add when call end
+         stack.push(node);
+     }
+     //Function to return list containing vertices in Topological order. 
+     static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
+     {
+         // add your code here
+         boolean visited[]=new boolean[V];
+         Arrays.fill(visited,false);
+         Stack<Integer> stack=new Stack<>();
+         for(int i=0;i<V;i++)
+         {
+             if(!visited[i])
+             {
+                 DFSTopological(i,adj,visited,stack);
+             }
+         }
+         int arr[]=new int[V];
+         int index=0;
+         while(!stack.empty())
+         {
+             arr[index++]=stack.pop();
+         }
+         return arr;
+         
+     }
+ }

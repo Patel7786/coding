@@ -1,0 +1,44 @@
+//Approach
+/*
+ * if(root is leaf) then return pair(root.data,true)
+ * if(root.data==left.val+right.val) return Pair(root.data+left.val+right.val,true);
+ * else return Pair(0,false);
+ */
+
+class Pair
+{
+    int val;
+    boolean flag;
+    Pair(int val,boolean flag)
+    {
+        this.val=val;
+        this.flag=flag;
+    }
+}
+class Solution
+{
+    Pair fastSum(Node root)
+    {
+        if(root==null) return new Pair(0,true);
+        if(root.left==null && root.right==null)
+        {
+            return new Pair(root.data,true);
+        }
+        Pair l=fastSum(root.left);
+        Pair r=fastSum(root.right);
+        Pair ans=new Pair(0,false);
+        if((l.val+r.val)==root.data)
+        {
+            ans.val=(l.val+r.val+root.data);
+            ans.flag=l.flag&r.flag;
+        }
+        return ans;
+    }
+	boolean isSumTree(Node root)
+	{
+             // Your code here
+             Pair p=fastSum(root);
+             return p.flag;
+             
+	}
+}

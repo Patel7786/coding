@@ -1,0 +1,33 @@
+// DFS goes root to leaf and it is by using Recursion
+//time complexity O(V+E)
+
+class Solution {
+    public void DFS(int node,ArrayList<ArrayList<Integer>> adj,boolean visited[],ArrayList<Integer> ans)
+    {
+        if(visited[node])
+        {
+            ans.add(node);
+            visited[node]=false;
+            ArrayList<Integer> list=adj.get(node);
+            for(int i=0;i<list.size();i++)
+            {
+                if(visited[list.get(i)])
+                {
+                    DFS(list.get(i),adj,visited,ans);
+                }
+            }
+        }
+    }
+    // Function to return a list containing the DFS traversal of the graph.
+    public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
+        // Code here
+        ArrayList<Integer>ans =new ArrayList<>();
+        boolean[] visited=new boolean[V];
+        for(int i=0;i<V;i++)
+        {
+            visited[i]=true;
+        }
+        DFS(0,adj,visited,ans);
+        return ans;
+    }
+}

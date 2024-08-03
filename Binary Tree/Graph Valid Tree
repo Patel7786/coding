@@ -1,0 +1,49 @@
+//Graph Valid Tree   Important
+//Approach
+/*
+ * A graph is valid for tree if 
+ * 1. no cycle in graph
+ * 2.all nodes are visited.
+ * preparing adjcency list then check isCycle() if it is true it means cycle present else false means no cycle.
+ * after detecting cycle check for all node are visited or not if graph is not connected then how it become Tree.
+ */
+public class Solution {
+    public static Boolean isDFS(int index,int parent,boolean visited[],ArrayList<ArrayList<Integer>> adj)
+    {
+        visited[index]=true;
+        ArrayList<Integer> l= adj.get(index);
+        for(int i:l)
+        {
+            if(!visited[i])
+            {
+                if(isDFS(i,index,visited,adj)) return true;
+            }
+            else if(i!=parent)
+                return true;
+        }
+        return false;
+    }
+    public static Boolean checkGraph(int[][] edges, int n, int m) {
+        // Write your code here
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<n;i++)
+        {
+            adj.add(new ArrayList<Integer>());
+        }
+        for(int i=0;i<m;i++)
+        {
+            int u=edges[i][0];
+            int v=edges[i][1];
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+        boolean visited[]=new boolean[n+1];
+        Arrays.fill(visited,false);
+        if(isDFS(0,-1,visited,adj)) return false;
+        for(int i=0;i<n;i++)
+        {
+            if(!visited[i]) return false;
+        }
+        return true;
+    }
+}

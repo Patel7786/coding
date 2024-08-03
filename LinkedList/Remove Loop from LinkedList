@@ -1,0 +1,57 @@
+//Approach
+/*
+1>first detect loop by floyed detection algorithm
+2> then find the first node from where loop started
+3> delete loop from first Node
+*/
+
+class Solution
+{
+    
+    //Function to check if the linked list has a loop.
+    public static Node detectLoop(Node head){
+        // Add code here
+        Node slow=head;
+        Node fast=head;
+        while(slow!=null && fast!=null && fast.next!=null)
+        {
+            slow=slow.next;
+            fast=fast.next.next;
+            if(slow==fast) return fast;
+        }
+        return null;
+    }
+    //find first node where loop started 
+    public static Node LoopNode(Node head,Node fast)
+    {
+        Node slow=head;
+        while(fast!=slow)
+        {
+            slow=slow.next;
+            fast=fast.next;
+        }
+        return slow;
+    }
+    //end loop
+    public static void EndNode(Node temp)
+    {
+        Node t=temp.next;
+        while(t.next!=temp)
+        {
+            t=t.next;
+        }
+        t.next=null;
+    }
+    //Function to remove a loop in the linked list.
+    public static void removeLoop(Node head){
+        // code here
+        // remove the loop without losing any nodes
+        Node fast=detectLoop(head);
+        if(fast!=null)
+        {
+            Node temp=LoopNode(head,fast);
+            EndNode(temp);
+        }
+        
+    }
+}

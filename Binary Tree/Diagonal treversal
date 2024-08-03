@@ -1,0 +1,37 @@
+/*
+ * Approach
+ * 1. for every right traversal value of key is same 
+ * 2.for every left traversal value of key is +1 .
+ * use HashMap<Key,ArrayList> to store data after that sort key wise add into list and return.
+ */
+
+
+class Tree
+{
+    public void fastdiagonal(Node root,int key,HashMap<Integer,ArrayList<Integer>> hm)
+    {
+        if(root==null) return;
+        if(!hm.containsKey(key))
+        {
+            hm.put(key,new ArrayList<Integer>());
+        }
+        hm.get(key).add(root.data);
+        fastdiagonal(root.left,key+1,hm);
+        fastdiagonal(root.right,key,hm);
+        
+    }
+     public ArrayList<Integer> diagonal(Node root)
+      {
+           //add your code here.
+           HashMap<Integer,ArrayList<Integer>> hm=new HashMap<>();
+           fastdiagonal(root,0,hm);
+           ArrayList<Integer> list=new ArrayList(hm.keySet());
+           Collections.sort(list);
+           ArrayList<Integer> l=new ArrayList<>();
+           for(int i: list)
+           {
+               l.addAll(hm.get(i));
+           }
+           return l;
+      }
+}

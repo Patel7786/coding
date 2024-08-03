@@ -1,0 +1,30 @@
+//Remove duplicates from an unsorted linked list
+//use hashmap to solve  and traverse the whole node so
+//Time complexity : O(N) and Space Complexity : O(N)
+class Solution
+{
+    //Function to remove duplicates from unsorted linked list.
+    public Node removeDuplicates(Node head) 
+    {
+         // Your code here
+         HashMap<Integer,Integer> hm=new HashMap<>();
+         Node h=head;
+         Node prev=null;
+         while(h!=null)
+         {
+            if(hm.containsKey(h.data))
+            {
+                prev.next=h.next;
+            }
+            else
+            {
+                prev=h;
+                hm.put(h.data,0);
+            }
+            h=h.next;
+            
+         }
+         return head;
+    }
+}
+

@@ -1,0 +1,15 @@
+class Solution{
+    public int fastsum(Node root)
+    {
+        if(root==null) return 0;
+        int l=fastsum(root.left);
+        int r=fastsum(root.right);
+        int val=root.data;
+        root.data=l+r;
+        return val+root.data;
+    }
+    public void toSumTree(Node root){
+         //add code here.
+         fastsum(root);
+    }
+}

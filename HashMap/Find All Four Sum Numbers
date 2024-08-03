@@ -1,0 +1,48 @@
+class Solution {
+    public ArrayList<ArrayList<Integer>> fourSum(int[] arr, int k) {
+        // code here
+        HashMap<Integer,Integer> hm=new HashMap<Integer,Integer>();
+        Arrays.sort(arr);
+       ArrayList<ArrayList<Integer>> list=new ArrayList<>();
+        int n=arr.length;
+        for(int i=0;i<arr.length;i++)
+        {
+            if(hm.containsKey(arr[i]))
+            {
+                hm.put(arr[i],hm.get(arr[i])+1);
+            }
+            else
+                hm.put(arr[i],1);
+        }
+        
+        for(int i=0;i<n-3;i++)
+        {
+            for(int j=i+1;j<n-2;j++)
+            {
+                for(int K=j+1;K<n-1;K++)
+                {
+                    int sum=arr[i]+arr[j]+arr[K];
+                    int key=k-sum;
+                    if(hm.containsKey(key)==true)
+                    {
+                        hm.put(arr[i],hm.get(arr[i])-1);
+                        hm.put(arr[j],hm.get(arr[j])-1);
+                        hm.put(arr[K],hm.get(arr[K])-1);
+                        if( hm.get(key)>0 && key>=arr[K])
+                        {
+                            ArrayList<Integer> l=new ArrayList<>();
+                            Collections.addAll(l,arr[i],arr[j],arr[K],key);
+                            if(!list.contains(l)) list.add(l);
+                            
+                        }
+                        hm.put(arr[i],hm.get(arr[i])+1);
+                        hm.put(arr[j],hm.get(arr[j])+1);
+                        hm.put(arr[K],hm.get(arr[K])+1);
+                    }
+                }
+            }
+        }
+        
+        return list;
+    }
+}

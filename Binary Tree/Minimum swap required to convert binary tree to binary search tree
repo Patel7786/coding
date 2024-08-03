@@ -1,0 +1,47 @@
+//Minimum swap required to convert binary tree to binary search tree
+//Approach :
+/*
+ * first write inorder of the current Binary Tree in arr
+ * seconde sort the array that because Inorder of BST is sorted in A
+ * then check arr[i]!=A[j] then count++ and swap(A);
+ * Time Complexity : O(NlogN)
+ * Space Complexity: O(N)
+ */
+class Solution {
+    static int ind=0;
+    public static void inorder(int n,int []A,int arr[],int index)
+    {
+        if(index>=n) return;
+        inorder(n,A,arr,2*index+1);
+        arr[ind++]=A[index];
+        inorder(n,A,arr,2*index+2);
+        
+    }
+    public static int minSwaps(int n, int[] A) {
+        // code here
+        int arr[]=new int[n];
+        Solution.ind=0;
+        inorder(n,A,arr,0);
+        Arrays.sort(A);
+        int count=0;
+        for(int i=0;i<n;i++)
+        {
+            if(arr[i]!=A[i])
+            {
+                count++;
+                int j=i;
+                while(j<n)
+                {
+                    if(A[j]==arr[i]) break;
+                    j++;
+                }
+                int temp=A[j];
+                A[j]=A[i];
+                A[i]=temp;
+            }
+        }
+    
+        return count;
+    }
+}
+     

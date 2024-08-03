@@ -1,0 +1,28 @@
+//BFS level by level : using queue and Iterator.
+public void BFS(ArrayList<ArrayList<Integer>> adj, boolean visited[], Queue<Integer>q, ArrayList<Integer> list)
+    {
+        for(int i=0;i<V;i++)
+        {
+            visited[i]=true;
+        }
+        q.add(0);
+        while(!q.isEmpty())
+        {
+            int val=q.remove();
+            list.add(val);
+            visited[val]=false;
+            ArrayList<Integer> l=adj.get(val);
+           for(int i=0;i<l.size();i++)
+            {
+                int a=l.get(i);
+                if(visited[a])
+                {
+                    list.add(a);
+                    q.add(a);
+                    visited[a]=false;
+                }
+            }
+        }
+    }
+
+    //adj take the input in form of adjcent list;

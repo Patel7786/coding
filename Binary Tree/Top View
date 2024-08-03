@@ -1,0 +1,57 @@
+//Level wise Traverse and if any key occure first time then store other wise ignore.
+
+class Pair
+{
+    Node node;
+    int key;
+    Pair(Node node,int key)
+    {
+        this.node=node;
+        this.key=key;
+    }
+}
+class Solution
+{
+    //Function to return a list of nodes visible from the top view 
+    //from left to right in Binary Tree.
+    static void fasttopView(Node root,HashMap<Integer,Integer> hm,int key)
+    {
+       if(root==null) return;
+        Queue<Pair> q=new LinkedList<Pair>();
+        q.add(new Pair(root,0));
+        while(!q.isEmpty())
+        {
+            Pair temp=q.remove();
+            if(!hm.containsKey(temp.key))  // key occure first time
+            {
+                hm.put(temp.key,temp.node.data);
+            }
+            if(temp.node.left!=null)
+            {
+                q.add(new Pair(temp.node.left,temp.key-1));
+            }
+            if(temp.node.right!=null)
+            {
+                q.add(new Pair(temp.node.right,temp.key+1));
+            }
+        }
+        
+    }
+    static ArrayList<Integer> topView(Node root)
+    {
+        // add your code
+        
+        HashMap<Integer,Integer>hm=new HashMap<>();
+        fasttopView(root,hm,0);
+        //System.out.println(hm);
+        ArrayList<Integer> list=new ArrayList(hm.keySet());
+        Collections.sort(list);
+        ArrayList<Integer> l=new ArrayList<>();
+        for(int i:list)
+        {
+            l.add(hm.get(i));
+        }
+        return l;
+        
+    }
+}

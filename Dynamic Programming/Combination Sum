@@ -1,0 +1,43 @@
+//Combination Sum
+//Approcach
+/*
+*first remove duplicates because duplicates are not allowed in this problem so use HashSet.
+ * add each element which is substract one by one from target if target==0 then add then list otherwise leave it;
+ */
+class Solution
+{
+    //Function to return a list of indexes denoting the required 
+    //combinations whose sum is equal to given number.
+    static void combinations(ArrayList<Integer> A, int sum,int n,int index,ArrayList<Integer> ans,ArrayList<ArrayList<Integer>> list)
+    {
+        if(sum==0)
+        {
+            list.add(new ArrayList(ans));
+            return;
+        }
+        
+        int i=index;
+        while(i<n && A.get(i)<=sum)
+        {
+            ans.add(A.get(i));
+            combinations(A,sum-A.get(i),n,i,ans,list);
+            ans.remove(A.get(i));
+            i++;
+        }
+    }
+    static ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> A, int B)
+    {
+        // add your code here
+        HashSet<Integer> set=new HashSet<>(A);//remove duplicates
+        A.clear();
+        A.addAll(set);
+        Collections.sort(A);
+        ArrayList<Integer> ans=new ArrayList<Integer>();
+        ArrayList<ArrayList<Integer>> list=new ArrayList();
+        int index=0;
+        int n=A.size();
+        combinations(A,B,n,index,ans,list);
+        return list;
+        
+    }
+}

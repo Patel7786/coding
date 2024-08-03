@@ -1,0 +1,88 @@
+/* Dijkstra Algorithm : it used to solve to finding minimum distance from source node to every node.
+Time comlexity : Normal 0(V2) but incase of priority queue it is EBigO(logV)
+Use Data sturcture priority Queue or set
+take minimum distance of node from priority queue.
+*/
+class Pair
+{
+    int distanceNode;
+    int node;
+    Pair(int first,int second)
+    {
+        this.distanceNode=first;
+        this.node=second;
+    }
+}
+// for minimum distance value occure first from priority queue
+class DistanceComparator implements Comparator<Pair>
+{
+    public int compare(Pair a,Pair b)
+    {
+        return ((a.distanceNode==b.distanceNode)?(a.node-b.node):(a.distanceNode-b.distanceNode));
+    }
+}
+class Solution
+{
+    //Function to find the shortest distance of all the vertices
+    //from the source vertex S.
+    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> edges, int s)
+    {
+        
+        ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+		for(int i=0;i<V;i++)
+		{
+		    adj.add(new ArrayList<Pair>());
+		}
+		//create adjcency list
+		for(int i=0;i<edges.size();i++)
+		{
+		   ArrayList<ArrayList<Integer>> ll=new ArrayList<>();
+		   ll=edges.get(i);
+		   int u=i;
+		   for(int j=0;j<ll.size();j++)
+		   {
+		        int v=ll.get(j).get(0);
+		        int dist=ll.get(j).get(1);
+		        Pair p=new Pair(dist,v);
+		        adj.get(u).add(p);
+		        adj.get(v).add(new Pair(dist,u));
+		   }
+		   
+		}
+        //distance array from source node to each node
+		int dist[]=new int[V];
+        //put infinite value
+		Arrays.fill(dist,Integer.MAX_VALUE);
+	    PriorityQueue<Pair> pq=new PriorityQueue<Pair>(V,new DistanceComparator());
+	    //insert source node and distance of it 0
+		pq.add(new Pair(0,s));
+		dist[s]=0;
+		while(!pq.isEmpty())    // V times so logV
+		{
+		    Pair front =pq.remove();
+		    ArrayList<Pair> list=adj.get(front.node);
+		    for(int i=0;i<list.size();i++) //E times so E
+		    {
+		        Pair l=list.get(i);
+		        if(front.distanceNode+l.distanceNode<dist[l.node])
+		        {
+                    // if any pair exist of same node which was previousaly traverse then remove it 
+		            Pair findpair=new Pair(dist[l.node],l.node);
+		            if(pq.contains(findpair))
+		            {
+		                pq.remove(findpair);
+		            }
+                    // and update it 
+		            dist[l.node]=front.distanceNode+l.distanceNode;
+                    //again put it in pq beacuse another vertex values are also affected
+		            pq.add(new Pair(dist[l.node],l.node));
+		        }
+		        
+		    }
+		    
+		}
+	
+		
+		return dist;
+    }
+}

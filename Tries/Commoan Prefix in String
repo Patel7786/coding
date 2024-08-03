@@ -1,0 +1,92 @@
+//using normal Approach 
+
+class Solution{
+    String longestCommonPrefix(String arr[], int n){
+        // code here
+        int min=arr[0].length();
+        String str="";
+        for(int i=0;i<arr[0].length();i++)
+        {
+            char c=arr[0].charAt(i);
+            for(int j=1;j<n;j++)
+            {
+                if(arr[j].length()<=i) return str.length()==0?"-1": str;
+                if(arr[j].charAt(i)!=c ) return str.length()==0?"-1": str;
+            }
+            str+=c;
+        }
+        return str;
+    }
+}
+
+
+//2nd Approach :by using Tries --------------------------------------------------------------------------
+class Tries {
+    char data;
+    Tries[] children = new Tries[26];
+    int count=0;
+    boolean isTerminal;
+
+    Tries(char data) {
+        this.data = data;
+        for (int i = 0; i < 26; i++) {
+            children[i] = null;
+        }
+        isTerminal = false;
+    }
+}
+class Solution{
+    public void insertIntoTries(Tries root, String word) {
+        if (word.length() == 0) {
+            root.isTerminal = true;
+            return;
+        }
+        Tries child;
+        // assume all the character into string is in Caps
+        int index = word.charAt(0) - 'a';
+        if (root.children[index] != null) {
+            
+            child = root.children[index];
+        } 
+        else {
+            child = new Tries(word.charAt(0));
+            root.count++;
+            root.children[index] = child;
+        }
+        
+
+        // Recursive Call
+        insertIntoTries(child, word.substring(1));
+
+    }
+    
+    String longestCommonPrefix(String arr[], int n){
+        // code here
+        Tries t=new Tries('1');
+        for(int i=0;i<n;i++)
+        {
+            insertIntoTries(t,arr[i]);
+        }
+        String str="";
+        String first=arr[0];
+        for(int i=0;i<first.length();i++)
+        {
+            if(t.count==1)
+            {
+                str+=first.charAt(i);
+                int index=first.charAt(i)-'a';
+                t=t.children[index];
+            }
+            else
+                return str.length()==0?"-1":str;
+            
+            if(t.isTerminal) break;
+                
+        }
+       return str.length()==0?"-1":str; 
+    }
+}
+
+
+
+////---------------------------------------------------------------------------------------------------

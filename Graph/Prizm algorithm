@@ -1,0 +1,142 @@
+//prizm algorithm is used for calculating minimum spanning tree......
+/*
+we need distance[] ,parent[],mst[]
+we calculate minimum edges from  node to its adjecent vertes so we are using
+*/
+
+//time complexity of first Approach : O(V2);
+//time compexity of second Approch : EO(logV);
+//Space complexity O(E+V); in both cases
+class Pair
+{
+    int node;
+    int distance;
+    Pair(int node,int distance)
+    {
+        this.node=node;
+        this.distance=distance;
+    }
+}
+class DistanceComparator implements C
+
+class Solution{
+    
+	static int spanningTree(int V, int E, int edges[][]){
+	    // Code Here. 
+	    ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+	    for(int i=0;i<V;i++)
+	    {
+	        adj.add(new ArrayList<Pair>());
+	    }
+        //preparing adjency list
+	    for(int i=0;i<E;i++)
+	    {
+	        int u=edges[i][0];
+	        int v=edges[i][1];
+	        int w=edges[i][2];
+	        adj.get(u).add(new Pair(v,w));
+	        adj.get(v).add(new Pair(u,w));
+	    }
+        //preparing the DS
+        PriorityQueue<Pair> pq=new PriorityQueue<>(V,new DistanceComparator());
+	    int dist[]=new int[V];
+	    int parent[]=new int[V];
+	    boolean mst[]=new boolean[V];
+	    Arrays.fill(dist,Integer.MAX_VALUE);
+	    Arrays.fill(parent,-1);
+	    Arrays.fill(mst,false);
+	   parent[0]=-1;
+	    dist[0]=0;
+	    for(int i=0;i<V;i++)
+	    {
+	        int u=0;
+	        int mini=Integer.MAX_VALUE;
+            //every time check mimum value from the vertex which is not visited previously
+	        for(int j=0;j<V;j++)
+	        {
+	            if(dist[j]<mini && mst[j]==false)
+	            {
+	                u=j;
+	                mini=dist[j];
+	            }
+	        }
+	        mst[u]=true;
+	        for(Pair neighbour: adj.get(u))
+	        {
+	            if(!mst[neighbour.node] && dist[neighbour.node]>neighbour.distance)
+	            {
+	                dist[neighbour.node]=neighbour.distance;
+	                parent[neighbour.node]=u;
+	            }
+	        }
+	    }
+	    int sum=0;
+	    for(int i=1;i<V;i++)
+	    {
+	        sum+=dist[i];
+	    }
+	    return sum;
+	    
+	}
+}
+
+//------second Approach------------------------------------------------------ 
+
+class DistanceComparator implements Comparator<Pair>
+{
+    public int compare(Pair a, Pair b)
+    {
+        return ((a.distance==b.distance)?(a.node-b.node):(a.distance-b.distance));
+    }
+}
+class Solution{
+    
+	static int spanningTree(int V, int E, int edges[][]){
+	    // Code Here. 
+	    ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+	    PriorityQueue<Pair> pq=new PriorityQueue<>(V,new DistanceComparator());
+	    for(int i=0;i<V;i++)
+	    {
+	        adj.add(new ArrayList<Pair>());
+	    }
+	    for(int i=0;i<E;i++)
+	    {
+	        int u=edges[i][0];
+	        int v=edges[i][1];
+	        int w=edges[i][2];
+	        adj.get(u).add(new Pair(v,w));
+	        adj.get(v).add(new Pair(u,w));
+	    }
+	    int dist[]=new int[V];
+	    int parent[]=new int[V];
+	    boolean mst[]=new boolean[V];
+	    Arrays.fill(dist,Integer.MAX_VALUE);
+	    Arrays.fill(parent,-1);
+	    Arrays.fill(mst,false);
+	   parent[0]=-1;
+	    dist[0]=0;
+	    pq.add(new Pair(0,0));
+	    while(!pq.isEmpty())
+	    {
+	        Pair u=pq.remove();
+	        
+	        mst[u.node]=true;
+	        for(Pair neighbour: adj.get(u.node))
+	        {
+	            if(!mst[neighbour.node] && dist[neighbour.node]>neighbour.distance)
+	            {
+	                dist[neighbour.node]=neighbour.distance;
+	                parent[neighbour.node]=u.node;
+	                pq.add(neighbour);
+	            }
+	        }
+	    }
+	    int sum=0;
+	    for(int i=1;i<V;i++)
+	    {
+	        sum+=dist[i];
+	    }
+	    return sum;
+	    
+	}
+}

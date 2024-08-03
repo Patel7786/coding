@@ -1,0 +1,57 @@
+//Approach;
+//first
+/*  take hashmap and f(level+1,hm,root.left),f(level+1,hm,root.right) if(root is leaf) 
+store into hm(root.data,level);
+then check all the values of hash map are equall then return true else return false;
+Time: O(N)
+Space: O(N)
+*/
+/*
+ * calculate hight for every node 
+ * 1.if root.left==null then return right.val++ return right
+ * 2.if( root.right==null) theen return left.val++ return left;  
+ * 3.if(left.val==right.val) then return any value by +1 and return that; it does not matter it is left pr right
+ * Time : O(N)
+ * Space: O(h) which is taken by recursion
+ */
+
+
+
+class Pair
+{
+    int val;
+    boolean flag;
+    Pair(int val,boolean flag)
+    {
+        this.val=val;
+        this.flag=flag;
+    }
+}
+class Solution
+{
+    Pair fastcheck(Node root)
+    {
+        if(root==null) return new Pair(0,true);
+        Pair left=fastcheck(root.left);
+        Pair right=fastcheck(root.right);
+        if(root.left==null)
+        {
+            right.val++;
+            return right;
+        }
+        if(left.val==right.val || root.right==null)
+        {
+            left.val++;
+            return left;
+        }
+        
+        return new Pair(0,false);
+    }
+    boolean check(Node root)
+    {
+	// Your code here	
+	Pair ans=fastcheck(root);
+	return ans.flag;
+	
+    }
+}

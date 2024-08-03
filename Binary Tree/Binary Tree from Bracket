@@ -1,0 +1,89 @@
+/*
+example :4(2(3)(1))(6(5)) 
+ans : 4 2 3 1 6 5 
+so while creating binary tree first find value of node then second find start index and ending index for left sub tree.
+same for right sub tree 
+calculate node then
+for finding index use function calculate index(str,index,end);
+then use stack and caluate ending
+if start and end find  
+
+Time : each value is travserse so N and 
+                inside each travserse  we find ending index that is approx N
+    so O(N*N);
+Space O(N);
+*/
+
+ class BinaryTreeNode<T> {
+        public T data;
+        public BinaryTreeNode<T> left;
+        public BinaryTreeNode<T> right;
+        BinaryTreeNode(T data) {
+
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    }
+
+public class Solution
+{
+    static int calculateIndex(String str,int index,int end)
+    {//calculating index
+        if(index>end) return -1;
+        Stack<Character> stack=new Stack<>();
+        stack.push(str.charAt(index));
+        index++;
+            while(index<=end && !stack.empty())
+            {
+                if(str.charAt(index)==')')
+                {
+                    while(stack.peek()!='(')
+
+                        stack.pop();
+
+                    stack.pop();
+
+                    if(stack.empty()) return index;
+
+                }
+                else
+                    stack.push(str.charAt(index));
+                index++;
+            }
+            return -1;
+    }
+
+    public static BinaryTreeNode<Integer> fast(String str,int start,int end)
+    {
+        if(start>end) return null;
+        int num=0;
+        while(start<=end && str.charAt(start)>='0' && str.charAt(start)<='9') //prepare Node value
+        {
+            num*=10;
+            num+=(str.charAt(start)-'0');
+            start++;
+        }
+        int index=-1;
+
+        if(start<=end && str.charAt(start)=='(')
+        {
+            index=calculateIndex(str,start,end);
+        }
+
+        BinaryTreeNode<Integer> root=new BinaryTreeNode<Integer>(num);
+        if(index!=-1){
+            root.left=fast(str,start+1,index-1); //next element is root for child so provide then index of value instead of ( so start+1 and if "(" it is not taken than ")" also not take so index-1
+            root.right=fast(str,index+2,end-1);  //index is pointing ")" so provide value next is "(" after that number so give index+2
+        }
+        return root;
+    }
+
+    public static BinaryTreeNode<Integer> treeFromBracket(String str)
+    {
+       BinaryTreeNode<Integer> root= fast(str,0,str.length()-1);
+        return root;
+    }
+
+}
+

@@ -1,0 +1,42 @@
+//very very Important
+/*Approach : same as merge k sorted Arrays*/
+
+
+class NodeComparator implements Comparator<Node>{
+             
+            // Overriding compare()method of Comparator 
+                        // for descending order of cgpa
+            public int compare(Node s1,Node s2) {
+                return s1.data-s2.data;
+                }
+        }
+
+class Solution
+{
+    //Function to merge K sorted linked list.
+    Node mergeKList(Node[]arr,int K)
+    {
+        //Add your code here.
+        PriorityQueue<Node> pq=new PriorityQueue(K,new NodeComparator());
+        Node node=new Node(-1);
+        Node head=node;
+        for(int i=0;i<K;i++)
+        {
+            
+            pq.add(arr[i]);
+        }
+        while(!pq.isEmpty())
+        {
+            Node temp=pq.remove();
+            node.next=new Node(temp.data);
+            node=node.next;
+            if(temp.next!=null)
+            {
+                temp=temp.next;
+                pq.add(temp);
+            }
+            
+        }
+        return head.next;
+    }
+}

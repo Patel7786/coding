@@ -1,0 +1,67 @@
+class Pair
+{
+    int first;
+    int second;
+    Pair(int first,int second)
+    {
+        this.first=first;
+        this.second=second;
+    }
+}
+class Solution {
+    
+
+	public int[] shortestPath(int N,int M, int[][] edges) {
+		//Code here
+		ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+		for(int i=0;i<N;i++)
+		{
+		    adj.add(new ArrayList<Pair>());
+		}
+		//HashMap<String,Integer> dist=new HashMap<>();
+		for(int i=0;i<M;i++)
+		{
+		    int u=edges[i][0];
+		    int v=edges[i][1];
+		    Pair p=new Pair(v,edges[i][2]);
+		    adj.get(u).add(p);
+		}
+		
+		int dist[]=new int[N];
+		Arrays.fill(dist,Integer.MAX_VALUE);
+		boolean visited[]=new boolean[N];
+		Arrays.fill(visited,false);
+		Queue<Pair> q=new LinkedList<>();
+		q.add(new Pair(0,0));
+		dist[0]=0;
+		visited[0]=true;
+		int ans[]=new int[N];
+		while(!q.isEmpty())
+		{
+		    Pair front =q.remove();
+		    ArrayList<Pair> l=adj.get(front.first);
+		    for(int i=0;i<l.size();i++)
+		    {
+		        Pair val=l.get(i);
+		        if(!visited[val.first] || dist[front.first]+val.second<dist[val.first])
+		        {
+		            q.add(val);
+		            visited[val.first]=true;
+		            int a=dist[front.first]+val.second;
+		            dist[val.first]=Math.min(a,dist[val.first]);
+		        }
+		        
+		    }
+		    
+		}
+		for(int i=0;i<N;i++)
+		{
+		    if(dist[i]==Integer.MAX_VALUE)
+		    {
+		        dist[i]=-1;
+		    }
+		}
+		
+		return dist;
+	}
+}

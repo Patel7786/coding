@@ -1,0 +1,21 @@
+/*
+ * Time complexity : O(n)
+ * Space complextity : O(n)
+ */
+
+static int febo(int n,int dp[])
+{
+        if(n==0 || n==1) return n; //base case
+        
+        if(dp[n]!=-1) return dp[n]; // first check value is calculated or not
+        int b=febo(n-2,dp);
+        int a=febo(n-1,dp);
+        
+        dp[n]=(a+b)%1000000007;// memoization 
+        return dp[n];
+}
+public int fib(int n) {
+    int dp[]=new int[n+1];
+    Arrays.fill(dp,-1);
+    return febo(n,dp);
+}

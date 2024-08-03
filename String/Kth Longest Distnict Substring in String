@@ -1,0 +1,54 @@
+//Longest K unique characters substring
+/*
+Approach : two pointer approach with sliding window
+1.check if element is present in map or not if present then increase by 1 else map.put(s.charAt(end),1);
+2.if map.size()<k then end++
+3.else if map.size()==k then store the value of k
+4.else if map.size()>k then traverse until the map.size()<k  //in each traversal decrease by 1 and if any point value==0 then remove that key from map
+Time complexity : O(N)
+Space Complexity :O(N)
+*/
+class Solution {
+    public int longestkSubstr(String s, int k) {
+        // code here
+        if(k<=0) return -1;
+        int maxcount=-1;
+        int start=0;
+        int end=0;
+        HashMap<Character,Integer> map=new HashMap<>();
+        while(end<s.length())
+        {
+            if(map.containsKey(s.charAt(end)))
+            {
+                map.put(s.charAt(end),map.get(s.charAt(end))+1);
+            }
+            else
+                 map.put(s.charAt(end),1);
+            
+            if(map.size()<k)
+            {
+               end++;
+            }
+            else if(map.size()==k)
+            {
+                maxcount=Math.max(maxcount,end-start+1);
+                end++;
+            }
+            else
+            {
+                while(map.size()>k)
+                {
+                    map.put(s.charAt(start),map.get(s.charAt(start))-1);
+                    if(map.get(s.charAt(start))==0)
+                    {
+                        map.remove(s.charAt(start));
+                    }
+                     start++;
+                }
+                end++;
+            }
+        }
+        return maxcount;
+    }
+}
+

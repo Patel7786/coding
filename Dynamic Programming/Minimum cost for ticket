@@ -1,0 +1,28 @@
+import java.util.*;
+public class Solution {
+	public static int minpath(int n, int[] days, int[] cost,int index,int dp[])
+	{
+		if(index>=n) return 0;
+		//day1
+		if(dp[index]!=-1) return dp[index];
+		int a=cost[0]+minpath(n,days,cost,index+1,dp);
+		//day 7
+		int i;
+		for(i=index;i<n && days[i]<days[index]+7;i++);
+		int b=cost[1]+minpath(n,days,cost,i,dp);
+		//day 30
+		i=index;
+		for(i=index;i<n && days[i]<days[index]+30;i++);
+		int c=cost[2]+minpath(n,days,cost,i,dp);
+		dp[index]=Math.min(a,Math.min(b,c));
+		return dp[index];
+	}
+	public static int minimumCoins(int n, int[] days, int[] cost) {
+	
+		//Write your code here	
+		int dp[]=new int[n];
+		Arrays.fill(dp,-1);
+		return minpath(n,days,cost,0,dp);		
+	}
+
+}

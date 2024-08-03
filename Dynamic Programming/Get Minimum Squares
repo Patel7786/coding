@@ -1,0 +1,7 @@
+//Approach
+/*
+first got unlit i*i<=n 
+for every i call function(n-i*i);
+if(n==0) return 0;
+for every call stack add 1 and return.
+*/

@@ -1,0 +1,30 @@
+//Approach by Recursion
+void fastInorder(Node root,ArrayList<Integer> list)
+    {
+        if(root==null) return;
+        fastInorder(root.left,list);
+        list.add(root.data);
+        fastInorder(root.right,list);
+    }
+//Approch by Iteration
+ArrayList<Integer> inOrder(Node root) {
+    // Code
+    ArrayList<Integer> list=new ArrayList<>();
+    Stack<Node> stack=new Stack<>();
+    while(!stack.empty() || root!=null)
+    {
+        if(root!=null)
+        {
+            stack.add(root);
+            root=root.left;
+        }
+        else
+        {
+            root=stack.pop();
+            list.add(root.data);
+            root=root.right;
+        }
+    }
+    
+    return list;
+}

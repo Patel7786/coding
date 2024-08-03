@@ -1,0 +1,27 @@
+/*
+we Know first element of preorder traversal is Root Node of BSt.
+then define maxium and minium for every node 
+*/
+static int index=0;
+//Function that constructs BST from its preorder traversal.
+public static Node BinaryTree(int[] pre,int size,int min,int max)
+{
+    if(index>=size) return null;
+    if(pre[index]>min && pre[index]<max)
+    {
+        int val=pre[index++];
+        Node node=new Node(val);
+        node.left=BinaryTree(pre,size,min,val);
+        node.right=BinaryTree(pre,size,val,max);
+        return node;
+    }
+    return null;
+    
+}
+public static Node post_order(int pre[], int size) 
+{
+    //Your code here
+    GFG.index=0;
+    return BinaryTree(pre,size,Integer.MIN_VALUE,Integer.MAX_VALUE);
+    
+} 

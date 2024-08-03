@@ -1,0 +1,29 @@
+/*
+1.if max diameter in left Sub tree of root node.
+2.if max diameter in right sub tree of root node,
+3.max diameter conatins root node.
+*/
+class Solution {
+    
+    int[] fastdiameter(Node root)
+    {
+        if(root==null) 
+        {
+            return new int[]{0,0};
+        }
+        int[] d=new int[2];
+        int[] d1=fastdiameter(root.left);
+        int[] d2=fastdiameter(root.right);
+        d[1]=1+Math.max(d1[1],d2[1]);
+        int d3=d1[1]+d2[1]+1;
+        d[0]=Math.max(d1[0],Math.max(d2[0],d3));
+        return d;
+    }
+    // Function to return the diameter of a Binary Tree.
+    int diameter(Node root) {
+        // Your code here
+        int arr[]=fastdiameter(root);
+        return arr[0];
+        
+    }
+}

@@ -1,0 +1,36 @@
+//Maximum sum of Non-adjacent nodes
+/*
+ * Approch : include and exclude 
+ * if root is take taken then root.left and root.right values not taken.
+ * so for every node calcuate sum which incude then root and exclude the root.
+ * include=root.data+left.exclude+right.exclude //mandatory because left.include contains root.left value. same for right
+ * but in exclude if root value not taken then we take either left.include or exclude + max(right.include or exclude) because if 
+ * we are not taking root then those value provide me max value we take either we take root.left.data or root.left.left.data  which is max same for right sub tree
+ */
+class Pair
+{
+    int exclude;
+    int include;
+    Pair(int in,int ex)
+    {
+        this.include=in;
+        this.exclude=ex;
+    }
+}
+class Solution
+{
+    static Pair fastgetMaxSum(Node root)
+    {
+        if(root==null) return new Pair(0,0);
+        Pair left=fastgetMaxSum(root.left);
+        Pair right=fastgetMaxSum(root.right);
+        return new Pair(left.exclude+right.exclude+root.data,Math.max(left.include,left.exclude)+Math.max(right.exclude,right.include));
+    }
+    //Function to return the maximum sum of non-adjacent nodes.
+    static int getMaxSum(Node root)
+    {
+        // add your code here
+        Pair ans=fastgetMaxSum(root);
+        return Math.max(ans.include,ans.exclude);
+    }
+}

@@ -1,0 +1,37 @@
+class Solution 
+{ 
+    int fastLCS(String A,String B,String C,int index1,int index2,int index3,int n1,int n2,int n3,int dp[][][])
+    {
+        if(index1>=n1 || index2>=n2 || index3>=n3) return 0;
+        if(dp[index1][index2][index3]!=-1) return dp[index1][index2][index3];
+        if(A.charAt(index1)==B.charAt(index2) && B.charAt(index2)==C.charAt(index3))
+        {
+            return  dp[index1][index2][index3]= 1+fastLCS(A,B,C,index1+1,index2+1,index3+1,n1,n2,n3,dp);
+        }
+        else
+        {
+            int a=fastLCS(A,B,C,index1+1,index2,index3,n1,n2,n3,dp);
+            int b=fastLCS(A,B,C,index1,index2+1,index3,n1,n2,n3,dp);
+            int c=fastLCS(A,B,C,index1,index2,index3+1,n1,n2,n3,dp);
+            return  dp[index1][index2][index3]= Math.max(a,Math.max(b,c));
+        }
+    }
+    int LCSof3(String A, String B, String C, int n1, int n2, int n3) 
+    { 
+        // code here
+        int dp[][][]=new int[n1+1][n2+1][n3+1];
+        for(int i=0;i<=n1;i++)
+        {
+            for(int j=0;j<=n2;j++)
+            {
+                for(int k=0;k<=n3;k++)
+                {
+                    dp[i][j][k]=-1;
+                }
+                   
+            }
+        }
+        return fastLCS(A,B,C,0,0,0,n1,n2,n3,dp);
+        
+    }
+}

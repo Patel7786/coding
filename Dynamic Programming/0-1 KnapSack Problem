@@ -1,0 +1,34 @@
+//0-1 knapsack problem
+//Approach
+/*
+ * simple approch is either an item will take or not .
+ * Take means weight of item is <= Knapsack size   and also add the respective value//include
+ * Not Take means weight of item is <= Knapsack size //exclude
+ */
+class Solution 
+{ 
+    static int solve(int[] weight, int[] value, int n, int maxWeight,int index,int w,int dp[][])
+    {
+        if( w>maxWeight) return 0;
+        if(index>=n) return 0;
+        if(dp[index][w]!=-1) return dp[index][w];
+        int include=0;
+        if(w+weight[index]<=maxWeight)// current weigth is less than the knapsack size then inculde
+            include=value[index]+solve(weight, value, n, maxWeight, index+1, w+weight[index],dp);
+        int exclude=0+solve(weight, value, n, maxWeight, index+1, w,dp);//exclude
+        dp[index][w]=Math.max(include,exclude);//take max from above
+        return dp[index][w];
+    }
+    //Function to return max value that can be put in knapsack of capacity W.
+    static int knapSack(int maxWeight, int weight[], int value[], int n) 
+    { 
+         // your code here 
+         int dp[][]=new int[n][maxWeight+1];
+            for(int i=0;i<n;i++)
+            {
+                for(int j=0;j<=maxWeight;j++)
+                    dp[i][j]=-1;
+            }
+        return solve(weight, value, n, maxWeight, 0, 0,dp);
+    } 
+}

@@ -1,0 +1,31 @@
+//Reverse a Linked List in groups of given size
+//time complexity :O(N); 
+//Space :O(1)
+class Solution
+{
+    public static Node reverseList(Node head,int k)
+    {
+        // code here
+        if(head==null) return null;
+        Node prev=null;
+        Node temp=head;
+        int count=0;
+        while(head!=null && count<k)
+        {
+            count++;
+            Node next=head.next;
+            head.next=prev;
+            prev=head;
+            head=next;
+        }
+        temp.next=reverseList(head,k);
+        return prev;
+        
+    }
+    public static Node reverse(Node node, int k)
+    {
+        //Your code here
+        return reverseList(node,k);
+    }
+}
+

@@ -1,0 +1,46 @@
+//how to make n by using this numbers { 1, 2, 5, 10, 20, 50, 100, 200, 500, 2000 }
+//Approach :
+/*
+ * first: take value and check number is with in arr or not.
+ * if n is out of this array then divide my maximum value of this array which is 20000
+ * ans store 2000 as much time quoitent got.
+ * and again call function of left reminder is n.
+ */
+
+
+class Solution{
+    static void calculate(int n, ArrayList<Integer> list,int arr[])
+    {
+        if(n<=0) return;
+        int i=1;
+        for(;i<10;i++)
+        {
+            if(arr[i]>=n) break;
+        }
+        if(i<10 && arr[i]==n)
+        {
+            list.add(arr[i]);
+            return;
+        }
+        
+            int modulo=n%arr[i-1];
+            int div=n/arr[i-1];
+            for(int j=0;j<div;j++)
+            {
+                list.add(arr[i-1]);
+            }
+            calculate(modulo,list,arr);
+        
+        
+        
+    }
+    static List<Integer> minPartition(int N)
+    {
+        // code here
+        ArrayList<Integer> list=new ArrayList<>();
+        int arr[]= { 1, 2, 5, 10, 20, 50, 100, 200, 500, 2000 };
+        calculate(N,list,arr);
+        return list;
+        
+    }
+}

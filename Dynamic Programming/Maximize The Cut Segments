@@ -1,0 +1,73 @@
+// Memoization + recursion time O(n*3) and spaceO(n)+)(n)
+class Solution
+{
+    public int maxcut(int n,int arr[],int dp[])
+    {
+        if(n==0) return 0;
+        if(n<0) return Integer.MIN_VALUE;
+        if(dp[n]!=-1) return dp[n];
+        int maxi=Integer.MIN_VALUE;
+        for(int i=0;i<3;i++)
+        {
+            int v=maxcut(n-arr[i],arr,dp);
+            if(v!=Integer.MIN_VALUE)
+            {
+                maxi=Math.max(maxi,v+1);
+            }
+        }
+        dp[n]=maxi;
+        return dp[n];
+    }
+    //Function to find the maximum number of cuts.
+    public int maximizeCuts(int n, int x, int y, int z)
+    {
+       //Your code here
+       int arr[]=new int[3];
+       int dp[]=new int[n+1];
+       arr[0]=x;
+       arr[1]=y;
+       arr[2]=z;
+       Arrays.fill(dp,-1);//memoization
+       int ans=maxcut(n,arr,dp);
+       return ans==Integer.MIN_VALUE?0:ans;
+    }
+}
+
+
+//Tabular Method : time O(n*3) and spaceO(n)
+class Solution
+{
+    public int maxcut(int n,int arr[])
+    {
+        int dp[]=new int[n+1];
+        Arrays.fill(dp,Integer.MIN_VALUE);
+        dp[0]=0;
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=0;j<3;j++)
+            {
+                if(i-arr[j]>=0)
+                {
+                    dp[i]=Math.max(dp[i],dp[i-arr[j]]+1);
+                }
+            }
+            
+        }
+        return dp[n];
+    }
+    //Function to find the maximum number of cuts.
+    public int maximizeCuts(int n, int x, int y, int z)
+    {
+       //Your code here
+       int arr[]=new int[3];
+       
+       arr[0]=x;
+       arr[1]=y;
+       arr[2]=z;
+       
+       int ans=maxcut(n,arr);
+       return ans<0?0:ans;
+    }
+}
+
+// space otimization not possible beacuse the values are not depenedent on fixed so that

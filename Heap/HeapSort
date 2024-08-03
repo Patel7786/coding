@@ -1,0 +1,51 @@
+/*
+Steps:
+1.Build Heap 
+2.for build healp use heapify function
+3.for sorting swap(first element of heap (which is maximum),last element of heap );
+4.use loop for sorting
+*/
+class Solution
+{
+    //Function to build a Heap from array.
+    void buildHeap(int arr[], int n)
+    {
+        // Your code here
+        for(int i=n/2;i>=0;i--)
+            heapify(arr,n,i);
+    }
+    void swap(int arr[],int i,int j)
+    {
+        int temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+    }
+    //Heapify function to maintain heap property.
+    void heapify(int arr[], int n, int i)
+    {
+        // Your code here
+        int left=2*i+1;
+        int right=2*i+2;
+        int largest=i;
+        if(left<n && arr[largest]<arr[left]) largest=left;
+        if(right<n && arr[largest]<arr[right]) largest=right;
+        if(largest!=i)
+        {
+            swap(arr,i,largest);
+            heapify(arr,n,largest);
+        }
+    }
+    
+    //Function to sort an array using Heap Sort.
+    public void heapSort(int arr[], int n)
+    {
+        //code here
+        buildHeap(arr,n);
+        for(int i=n-1;i>=0;i--)
+        {
+            swap(arr,0,i);
+            
+            heapify(arr,i,0);
+        }
+    }
+ }

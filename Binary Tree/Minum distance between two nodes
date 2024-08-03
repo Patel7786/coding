@@ -1,0 +1,38 @@
+//find the minimum distance between the two node
+/*
+Approach
+first find LCA then 
+find the distance from lca Node to a that h1
+and the distance from lca node to b that is h2
+return h1+h2
+Time :O(N)
+Space : O(h)
+*/
+class GfG {
+    Node fastlca(Node root,int n1,int n2) //find lca
+    {
+        if(root==null) return null;
+        Node l=fastlca(root.left,n1,n2);
+        Node r=fastlca(root.right,n1,n2);
+        if(root.data==n1 || root.data==n2)  return root;
+        if(l!=null && r!=null)  return root;
+        else if(l!=null && r==null) return l;
+        else if(l==null && r!=null) return r;
+        else return null;
+    }
+    int fastdist(Node root,int n,int key)
+    {
+        if(root==null) return 0;
+        if(root.data==n) return key;
+        int l=fastdist(root.left,n,key+1);
+        int r=fastdist(root.right,n,key+1);
+        return l+r;
+    }
+    int findDist(Node root, int a, int b) {
+        // Your code here
+        Node lca=fastlca(root,a,b);
+        int dist1=fastdist(lca,a,0);
+        int dist2=fastdist(lca,b,0);
+        return dist1+dist2;
+    }
+}

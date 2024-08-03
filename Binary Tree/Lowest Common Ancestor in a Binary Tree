@@ -1,0 +1,30 @@
+//Lowest Common Ancestor in a Binary Tree
+
+/*
+Approach :
+if left!=null and right !=null return root;
+if left!=null && right  ==null return left;
+if left==null && right !=null return right;
+else return null;
+*/
+
+class Solution
+{
+    Node fastlca(Node root,int n1,int n2)
+    {
+        if(root==null) return null;
+        Node l=fastlca(root.left,n1,n2);
+        Node r=fastlca(root.right,n1,n2);
+        if(root.data==n1 || root.data==n2)  return root;
+        if(l!=null && r!=null)  return root;
+        else if(l!=null && r==null) return l;
+        else if(l==null && r!=null) return r;
+        else return null;
+    }
+    //Function to return the lowest common ancestor in a Binary Tree.
+	Node lca(Node root, int n1,int n2)
+	{
+		// Your code here
+		return fastlca(root,n1,n2);
+	}
+}

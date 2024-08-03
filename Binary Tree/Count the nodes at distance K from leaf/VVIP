@@ -1,0 +1,45 @@
+//Count the nodes at distance K from leaf
+/*
+Given a binary tree with n nodes and a non-negative integer k, the task is to count the number of special nodes.
+A node is considered special if there exists at least one leaf in its subtree such that the distance between the node and leaf is exactly k.
+
+Note: Any such node should be counted only once. For example, if a node is at a distance k from 2 or more leaf nodes, then it*/
+//Approach:-
+/* 
+Time complexity():- O(N)
+DFS +binary tree questions
+*/
+
+class Solution
+{
+    void dfs(Node root,Vector<Node>path,int k,HashSet<Node> set)
+    {
+        if(root==null) return;
+        path.add(root);
+        if(root.left==null && root.right==null)
+        {
+            int p=path.size()-1-k;
+            if(p>-1)
+            {
+                set.add(path.get(p));
+                
+            }
+        }
+        
+        dfs(root.left,path,k,set);
+        dfs(root.right,path,k,set);
+        path.remove(root);
+    }
+    
+    
+    //Function to return count of nodes at a given distance from leaf nodes.
+    int printKDistantfromLeaf(Node root, int k)
+    {
+        // Write your code hereHash
+        HashSet<Node> set=new HashSet<>();
+        Vector<Node> path = new Vector<Node>();
+        dfs(root,path,k,set);
+        return set.size();
+    }
+
+}

@@ -1,0 +1,18 @@
+class Solution {
+    static int mincost(int[] cost,int i,int N,int dp[])
+    {
+        if(i>=N) return 0;
+        if(dp[i]!=-1) return dp[i];
+        dp[i]= Math.min(mincost(cost,i+1,N,dp),mincost(cost,i+2,N,dp))+cost[i]; //memoization ===>
+        return dp[i];
+        
+    }
+    static int minCostClimbingStairs(int[] cost , int N) {
+        //Write your code here
+        int dp[]=new int[N];
+        Arrays.fill(dp,-1);
+        int a=mincost(cost,0,N,dp);
+        int b=mincost(cost,1,N,dp);
+        return Math.min(a,b);
+    }
+};

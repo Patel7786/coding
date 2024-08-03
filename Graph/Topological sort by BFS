@@ -1,0 +1,58 @@
+//Approach is : caluclate indegree of every vertex and add vertex in queue which indegree in 0;
+/*
+ * basic idea about this problem is to and those value which indegree is 0 .
+ * every time when remove element from the queue add into ans . 
+ * And those node which is indegree from the removal node of queue is decrement and again check the indegree is zero then add into Queue.
+ */
+
+ //kahns algorithm
+class Solution
+{
+    
+    //Function to return list containing vertices in Topological order. 
+    static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
+    {
+        // add your code here
+        int indegree[]=new int[V];
+        Arrays.fill(indegree,0);
+        //calculate Indegree : Indegree means the arrow coming towards me
+        for(int i=0;i<V;i++)
+        {
+            ArrayList<Integer> list=adj.get(i);
+            for(int j=0;j<list.size();j++)
+            {
+                indegree[list.get(j)]++;
+            }
+        }
+        Queue<Integer> q=new LinkedList<>();
+        //added in queue those indegree is 0.
+        for(int i=0;i<V;i++)
+        {
+            if(indegree[i]==0)
+            {
+                q.add(i);
+            }
+        }
+        int index=0;
+        int[] ans=new int[V];
+        while(!q.isEmpty())
+        {
+            int front=q.remove();
+            ans[index++]=front;
+            ArrayList<Integer> l=adj.get(front);
+            for(int p=0;p<l.size();p++)
+            {
+                int val=l.get(p);
+                //decrement the indegree of val because front it parent and arrow is comming from the front. so if front is removed the arrow is also removed thats why.. 
+
+                indegree[val]--;
+                if(indegree[val]==0)
+                {
+                    q.add(val);
+                }
+            }
+        }
+        return ans;
+        
+    }
+}

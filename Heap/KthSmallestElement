@@ -1,0 +1,44 @@
+/*
+Approach :
+1.first create Max heap for K element.
+2.then match k+1 to n if arr[k]<arr[top] then swap and use heapify.
+3.final ans is arr[top] where top is 0th element in array.
+*/
+class Solution{
+    static void swap(int arr[],int i,int j)
+    {
+        int temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+    }
+    static void heapify(int arr[],int k,int i)
+    {
+        int left=2*i+1;
+        int right=2*i+2;
+        int largest=i;
+        if(left<k && arr[largest]<arr[left]) largest=left;
+        if(right<k && arr[largest]<arr[right]) largest=right;
+        if(largest!=i)
+        {
+            swap(arr,i,largest);
+            heapify(arr,k,largest);
+        }
+    }
+    public static int kthSmallest(int[] arr, int l, int r, int k) 
+    { 
+        //Your code here
+       
+        for(int i=k/2;i>=l;i--)
+        {
+            heapify(arr,k,i);
+        }
+        for(int i=k;i<=r;i++)
+        {
+            if(arr[l]>arr[i]){
+                swap(arr,l,i);
+                heapify(arr,k,l);
+            }
+        }
+        return arr[l];
+    } 
+}

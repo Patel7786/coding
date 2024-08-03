@@ -1,0 +1,42 @@
+//This problem is similer as 0-1 Knap Sack Problem where we can take that element which value is greate 
+//and size of that value Size<=KnapSack. But in this problem we take only those element by adding all value 
+//become perfect sum of target.
+//Approch
+/*
+ * similear include or exclude of each index.
+ */
+class Solution{
+    public int waysum(int arr[],int n, int sum,int index,int dp[][])
+    {
+        if(sum==0) return 1;
+        if(sum< 0) return 0;
+        if(index==n-1)
+        {
+            if(arr[index]==0) return 1;
+        }
+        if(index>=n) 
+        {
+            return 0;
+        }
+        int mod=1000000007;
+        if(dp[index][sum]!=-1) return dp[index][sum];
+        int en=sum-arr[index];
+        
+        dp[index][sum]=(waysum(arr,n,en,index+1,dp)+waysum(arr,n,sum,index+1,dp))%mod;
+        return dp[index][sum];
+    }
+	public int perfectSum(int arr[],int n, int sum) 
+	{ 
+	    // Your code goes here
+	    int dp[][]=new int[n+1][sum+1];
+	    for(int i=0;i<=n;i++)
+	    {
+	        for(int j=0;j<=sum;j++)
+	        {
+	            dp[i][j]=-1;
+	        }
+	    }
+	    return waysum(arr,n,sum,0,dp);
+	    
+	} 
+}

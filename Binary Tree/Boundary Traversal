@@ -1,0 +1,61 @@
+//traversing boundery of Binary Tree
+/*
+ * Approach is first add left sub tree node but one catch is here if node.left==null but node.right is present then node.right is boundery of left subtree
+ * so call a function for left sub tree if(node.left!=null) f(node.left) else f(node.right)
+ * same for right subtree function
+ * in  avobe both the case left subtree and right sub tree not including leaf node.
+ * and call for leaf node if(node.left==null && node.right==null) then add.
+ */
+class Solution
+{
+    void fastleft(Node root,ArrayList<Integer> list)
+    {
+        if(root==null) return;
+        if(root.left==null && root.right==null)
+        {
+            return;  // left node not including
+        }
+        list.add(root.data);
+        if(root.left!=null)
+            fastleft(root.left,list);
+        else
+            fastleft(root.right,list);
+    }
+    void fastright(Node root,ArrayList<Integer> list)
+    {
+        if(root==null) return;
+        if(root.left==null && root.right==null)
+        {
+            return;                 // leaf node not including
+        }
+        
+        if(root.right!=null)
+            fastright(root.right,list);
+        else
+            fastright(root.left,list);
+        list.add(root.data);  
+        
+    }
+    void leaf(Node root,ArrayList<Integer> list)
+    {
+        if(root==null) return;
+        if(root.left==null && root.right==null)
+        {
+            list.add(root.data);
+            return;
+        }
+        leaf(root.left,list);
+        leaf(root.right,list);
+    }
+	ArrayList <Integer> boundary(Node root)
+	{
+	    ArrayList<Integer> list=new ArrayList<>();
+	    if(root==null) return list;
+	    list.add(root.data);
+	    fastleft(root.left,list);
+	    if(!(root.left==null && root.right==null))
+	        leaf(root,list);
+	    fastright(root.right,list);
+	    return list;
+	}
+}

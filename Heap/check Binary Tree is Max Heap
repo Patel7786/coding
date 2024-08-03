@@ -1,0 +1,54 @@
+/*
+Approach :
+1.heap means CBT with heap property here max heap property.
+2. check Complete binary tree (CBT) :
+    check current index<=number of node in tree.
+3.For max heap : it is after CBT ,it means tree is Compete binary tree . it means all the level are same excpet leaf node.
+   case 1. if left and right child exist then root.data>=root.left.data && root.data>=root.right.data.
+   case 2. if left child exist and right is null at leaf node level.
+4. if (CBT and max heap ==true) return true;
+return false;
+*/
+class Solution {
+    int traverse(Node root,int count)
+    {
+        if(root==null) return count;
+        count=traverse(root.left,count);
+        count++;
+        return traverse(root.right,count);
+    }
+    boolean isCBT(Node root,int count ,int i)
+    {
+        if(root==null) return true;
+        if(i<=count)
+        {
+            return isCBT(root.left,count,2*i) && isCBT(root.right,count,2*i+1);
+        }
+        return false;
+    }
+    boolean isMaxheap(Node root)
+    {
+        if(root==null) return true;
+        boolean left=isMaxheap(root.left);
+        boolean right=isMaxheap(root.right);
+        if(root.left!=null && root.right!=null)
+        {
+            if(root.data>=root.left.data && root.data>=root.right.data) return left&right;
+            return false;
+        }
+        else if(root.left!=null)
+        {
+            if(root.data>=root.left.data) return true;
+        }
+        else if(root.left==null && root.right==null) return true;
+        return false;
+       
+    }
+    boolean isHeap(Node tree) {
+        // code here
+        int count=traverse(tree,0);
+        
+        if(isCBT(tree,count,1) ==true && isMaxheap(tree)==true) return true;
+        return false;
+    }
+}

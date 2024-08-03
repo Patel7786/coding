@@ -1,0 +1,150 @@
+//Phone directory
+//Normal Approach ----->
+class Solution{
+    static ArrayList<ArrayList<String>> displayContacts(int n, 
+                                        String contact[], String s)
+    {
+        // code here
+        Arrays.sort(contact);
+        ArrayList<ArrayList<String>> l=new ArrayList<>();
+       
+        for(int i=1;i<=s.length();i++)
+        {
+            ArrayList<String> list=new ArrayList<>();
+            String a=s.substring(0,i);
+            boolean flag=true;
+            for(int j=0;j<n;j++)
+            {
+                String b=contact[j];
+                if(i<=b.length())
+                {
+                    String c=b.substring(0,i);
+                    if(a.equals(c) && !list.contains(b))
+                    {
+                        flag=false;
+                        list.add(b);
+                    }
+                }
+            }
+            if(flag)
+                list.add("0");
+            l.add(list);
+        }
+        return l;
+    }
+}
+
+//tries Approach :----->
+class Tries {
+    char data;
+    Tries[] children = new Tries[26];
+    int count=0;
+    boolean isTerminal;
+
+    Tries(char data) {
+        this.data = data;
+        for (int i = 0; i < 26; i++) {
+            children[i] = null;
+        }
+        isTerminal = false;
+    }
+}
+class Solution{
+    
+    public static void insertIntoTries(Tries root, String word) {
+        if (word.length() == 0) {
+            root.isTerminal = true;
+            return;
+        }
+        Tries child;
+        // assume all the character into string is in Caps
+        int index = word.charAt(0) - 'a';
+        if (root.children[index] != null) {
+            
+            child = root.children[index];
+        } 
+        else {
+            child = new Tries(word.charAt(0));
+            root.count++;
+            root.children[index] = child;
+        }
+        
+
+        // Recursive Call
+        insertIntoTries(child, word.substring(1));
+
+    }
+    
+    
+    static void suggestion(Tries curr,String prefix ,ArrayList<String> list)
+    {
+       
+        if(curr.isTerminal)
+        {
+           if(!list.contains(prefix)) 
+                list.add(prefix); 
+        }
+        for(char ch='a';ch<='z';ch++)
+        {
+            Tries next=curr.children[ch-'a'];
+            if(next !=null)
+            {
+                prefix+=ch;
+                suggestion(next,prefix,list);
+                prefix=prefix.substring(0,prefix.length()-1);
+            }
+            
+        }
+        
+        
+    }
+    
+    static ArrayList<ArrayList<String>> displayContacts(int n, 
+                                  String contact[], String s)
+    {
+        // code here
+        Tries root=new Tries('0');
+        Tries prev=root;
+        //Arrays.sort(contact);//-----not need because insdie tries we are traversing from a to z so it is automatically sorted----
+        for(int i=0;i<n;i++)
+        {
+            insertIntoTries(root,contact[i]);
+        }
+        
+        String prefix="";
+        ArrayList<ArrayList<String>> finallist=new ArrayList<>();
+        
+        for(int i=0;i<s.length();i++)
+        {
+           
+            char suffix=s.charAt(i);
+            prefix+=suffix;
+            ArrayList<String> list=new ArrayList<>();
+            Tries curr=prev.children[suffix-'a'];
+            if(curr!=null)
+            {
+                suggestion(curr,prefix,list);
+                if(list.size()==0)
+                {
+                    list.add("0");
+                }
+                finallist.add(list);
+                prev=curr;
+            } 
+            else
+            {
+                while(i<s.length())
+                {
+                    ArrayList<String> arr=new ArrayList<>();
+                    arr.add("0");
+                    finallist.add(arr);
+                    i++;
+                }
+            }
+            
+                
+        }
+        return finallist;
+       
+    }
+}

@@ -1,0 +1,80 @@
+//Krushkal  algorithm also used for finding minimu spanning tree in Graph.
+//this is alternative of prizm algorithm
+/*
+ * we don't need adjceny list in krushkal algorithm.
+ * we need parent[] ,rank[] of Arrays
+ * we are using disjoint Set here for Union of two component
+ * in krushkal algorithm, sort 2d edges or array by using comparator in increasing distance.
+ * and union of two component if they are not from same component.
+ * time complexity O(ElogV) ans space O(E)
+ */
+class DistanceComparator implements Comparator<int[]>
+{
+    public int compare(int[] a,int[] b)
+    {
+        return a[2]-b[2];
+    }
+}
+
+class Solution{
+   
+    static void SetValue(int parent[],int V)
+    {
+        for(int i=0;i<V;i++)
+        {
+            parent[i]=i;
+        }
+    }
+    static int getParent(int node,int parent[])
+    {
+        if(parent[node]==node) // if the node is itself parent it means that is end final parent
+        {
+            return node;
+        }
+        parent[node]=getParent(parent[node],parent); // path compression: after getting initialize the parent of node so that another time we get directly.
+        return parent[node];
+    }
+    static void DisjointSet(int u,int v,int parent[],int rank[])
+    {
+         //getting parents
+        if(rank[u]<=rank[v]) // if rank[u]==rank[v] then we also do same in any of the both cases.
+        {
+            parent[u]=v;
+            rank[v]++;
+        }
+        else
+        {
+            parent[v]=u;
+            rank[u]++;
+        }
+    }
+	static int spanningTree(int V, int E, int edges[][]){
+	    // Code Here. by krushkal algorithm
+	    int rank[]=new int[V];
+        //set rank initilay 0
+	    Arrays.fill(rank,0);
+	    int parent[]=new int[V];
+        //set parent initial itself
+	    SetValue(parent,V); 
+        //sort the edges into increasing distance order
+	    Arrays.sort(edges,new DistanceComparator());  // time compexity ElogV
+        //calculate minimum distance 
+	    int minWeigth=0;
+	    for(int i=0;i<E;i++)  // O(E) time
+	    {
+	        int u=edges[i][0];
+	        int v=edges[i][1];
+	        u=getParent(u,parent);   // O(1) time 
+            v=getParent(v,parent);   // O(1) time
+	        int wt=edges[i][2];
+	        if(u!=v)    // if u and v from different component
+	        {
+                //Disjoint Set
+	            DisjointSet(u,v,parent,rank);  // O(1) time
+	            minWeigth+=wt;
+	        }
+	    }
+	    return minWeigth;
+	    
+	}
+}

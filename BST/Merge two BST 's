@@ -1,0 +1,72 @@
+//Approach
+/*
+first step to take Inorder of Both tree merge both of them
+Time (n1+n2)
+*/
+class Solution
+{
+    public List<Integer> merge(ArrayList<Integer> r1,ArrayList<Integer>r2)
+    {
+        ArrayList<Integer> list=new ArrayList<>();
+        int i=0;
+        int j=0;
+        int n1=r1.size();
+        int n2=r2.size();
+        while(i<n1 && j<n2)
+        {
+            int a=r1.get(i);
+            int b=r2.get(j);
+            
+            if(a<b)
+            {
+                list.add(a);
+                i++;
+            }
+            else if(a>b)
+            {
+                list.add(b);
+                j++;
+            }
+            else
+            {
+                list.add(a);
+                list.add(b);
+                i++;
+                j++;
+            }
+        }
+        while(i<n1)
+        {
+            int a=r1.get(i);
+            list.add(a);
+            i++;
+        }
+        while(j<n2)
+        {
+            int b=r2.get(j);
+            list.add(b);
+            j++;
+        }
+        return list;
+    }
+    //Function to return a list of integers denoting the node 
+    //values of both the BST in a sorted order.
+    public void Inorder(Node root,ArrayList<Integer> list)
+    {
+        if(root==null) return ;
+        Inorder(root.left,list);
+        list.add(root.data);
+        Inorder(root.right,list);
+    }
+    public List<Integer> merge(Node root1,Node root2)
+    {
+        // Write your code here
+        ArrayList<Integer> r1=new ArrayList<>();
+        Inorder(root1,r1);
+        ArrayList<Integer> r2=new ArrayList<>();
+        Inorder(root2,r2);
+        return merge(r1,r2);
+        
+    }
+    
+}

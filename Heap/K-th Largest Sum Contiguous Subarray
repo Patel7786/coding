@@ -1,0 +1,32 @@
+/*
+Approach :
+1.create every of combination of contiguous.
+2.use priority queue as min heap if q.peek()<sum then q.remove() and q.add(sum);
+*/
+class Solution {
+    public static int kthLargest(int N, int K, int[] Arr) {
+        // code here'
+        PriorityQueue<Integer> pq=new PriorityQueue<>();
+        for(int i=0;i<N;i++)
+        {
+            int sum=0;
+            for(int j=i;j<N;j++)
+            {
+               sum+=Arr[j];
+               if(pq.size()!=K)
+               {
+                   pq.add(sum);
+               }
+               else
+               {
+                   if(pq.peek()<sum)
+                   {
+                       pq.remove();
+                       pq.add(sum);
+                   }
+               }
+            }
+        }
+        return pq.peek();
+    }
+}

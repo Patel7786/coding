@@ -1,0 +1,42 @@
+//Minimum number of coins 
+//Approach
+/*
+ * start from the current node and minus from the value. for every node
+ * time complexity :O(V*M)
+ * Space Complexity : O(V)
+ */
+
+ class Solution{
+    public int findMin(int coins[],int dp[],int ans,int M)
+    {
+        if(ans==0) return 0;
+        if(ans<0) return Integer.MAX_VALUE;
+        if(dp[ans]!=-1) return dp[ans];
+        int mini=Integer.MAX_VALUE;
+       
+	    for(int i=0;i<M;i++)
+	    {
+	         int v=findMin(coins,dp,ans-coins[i],M);
+	        if(v!=Integer.MAX_VALUE)
+	        {
+	            mini=Math.min(mini,v+1);
+	            
+	        }
+	    }
+	    dp[ans]=mini;
+	    return mini;
+    }
+	public int minCoins(int coins[], int M, int V) 
+	{ 
+	    // Your code goes here
+	    if(V==0) return 0;
+	    
+	    int count=0;
+	    int dp[]=new int[V+1];
+	    Arrays.fill(dp,-1);
+	    int v=findMin(coins,dp,V,M);
+	    if(v==Integer.MAX_VALUE) return -1;
+	    return v;
+	    
+	} 
+}

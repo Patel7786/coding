@@ -1,0 +1,140 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "check",
+            "request": "launch",
+            "mainClass": "check",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "Practice",
+            "request": "launch",
+            "mainClass": "Practice",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "createAnimal",
+            "request": "launch",
+            "mainClass": "Reflection.createAnimal",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "traverse",
+            "request": "launch",
+            "mainClass": "Traversal.traverse",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "sumproblem",
+            "request": "launch",
+            "mainClass": "Problems.sumproblem",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "first",
+            "request": "launch",
+            "mainClass": "Problems.first",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "Abstraction",
+            "request": "launch",
+            "mainClass": "OOPsConcept.Abstraction",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "Encapsulation",
+            "request": "launch",
+            "mainClass": "OOPsConcept.Encapsulation",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "Polymorphism",
+            "request": "launch",
+            "mainClass": "OOPsConcept.Polymorphism",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "xyz",
+            "request": "launch",
+            "mainClass": "bank.xyz",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "Bank1",
+            "request": "launch",
+            "mainClass": "bank.Bank1",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "Normal",
+            "request": "launch",
+            "mainClass": "OOPsConcept.Normal",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "Inheritance",
+            "request": "launch",
+            "mainClass": "OOPsConcept.Inheritance",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "PP",
+            "request": "launch",
+            "mainClass": "PP",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "Implementation",
+            "request": "launch",
+            "mainClass": "Graph.Implementation",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "TriesImplementation",
+            "request": "launch",
+            "mainClass": "Tries.TriesImplementation",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "Heapify",
+            "request": "launch",
+            "mainClass": "Heap.Heapify",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "basicHeapOrepesations",
+            "request": "launch",
+            "mainClass": "Heap.basicHeapOrepesations",
+            "projectName": "coding_50b18b23"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}

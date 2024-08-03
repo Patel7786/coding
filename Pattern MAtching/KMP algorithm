@@ -1,0 +1,64 @@
+//Approch
+/*
+txt length is M,pattern length is N;
+in this algo we seach a pattern in a Text.
+so we serach one by one it will take more than m*n time.
+but In KMP Matcher we learn the pattern and prepare longest prefix which will be suffix.
+so we prapare LPS that is longest prefix Suffix array .
+if any element not found then move j=LPS[j-1];
+and if j==0 it means our element at begining of the pattern and no any element match then move i++ which is pointing to the text.
+*/
+
+class Solution
+{
+    void Prepare_lps(String pat,int LPS[])
+    {
+        LPS[0]=0;
+       
+        for(int i=1;i<pat.length();i++)
+        {
+            int j=LPS[i-1];
+            while(j>0 && pat.charAt(j)!=pat.charAt(i))
+            {
+                j=LPS[j-1];
+            }
+            if(pat.charAt(j)==pat.charAt(i))
+            {
+                LPS[i]=j+1;
+            }
+        }
+    }
+    
+    ArrayList<Integer> search(String pat, String txt)
+    {
+        // your code here
+        ArrayList<Integer> list=new ArrayList<>();
+        int LPS[]=new int[pat.length()];
+        Prepare_lps(pat,LPS);
+        int j=0;
+        int i=0;
+        while(i<txt.length())
+        {
+            if(pat.charAt(j)==txt.charAt(i))
+            {
+                i++;
+                j++;
+            }
+            else
+            {
+                if(j!=0)
+                {
+                    j=LPS[j-1];
+                }
+                else
+                    i++;
+            }
+            if(j==pat.length())
+            {
+                list.add(i-j+1);
+                j=LPS[j-1];  
+            }
+        }
+        return list;
+    }
+}
