@@ -1,0 +1,15 @@
+public class Two
+{
+    public String AddTwoString(String first,String Second)
+    {
+        return first+second;
+    }
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        String first=sc.next();
+        String Second=sc.next();
+        System.out.println(AddTwoString(first,Second));
+
+    }
+}
